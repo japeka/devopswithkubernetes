@@ -1,0 +1,76 @@
+
+Some notes regarding Part 1
+
+---
+
+Comics kubernetes at https://cloud.google.com/kubernetes-engine/kubernetes-comic/
+
+gcloud container clusters create myCluster
+kubectl run app --image gcr.io/google-samples/hello-app:1.0
+kubectl scale deployment app --replicas 3
+kubectl expose deployment app --port 80 --type=LoadBalancer
+kubectl get service app
+curl http://192.0.2.163:80
+kubectl set image deployment app app=gcr.io/google-samples/hello-app:2.0
+curl http://192.0.2.163:80
+
+---
+
+Part 1 => Kubernetes cluster with k3d
+
+k3d cluster create -a 2
+another terminal > docker ps
+
+---
+k3d kubeconfig get k3s-default
+---
+
+kubectl
+
+kubectl config use-context k3d-k3s-default
+
+kubectl cluster-info
+
+k3d cluster stop
+
+k3d cluster start
+
+k3d cluster delete
+
+---
+
+First Deploy
+
+docker run jakousa/dwk-app1
+
+
+
+k3d
+use local images > k3d image import <image-name>
+
+Deployment
+
+kubectl create deployment hashgenerator-dep --image=jakousa/dwk-app1 
+deployment.apps/hashgenerator-dep created
+
+ 
+kubectl describe deployments
+
+
+kubectl explain pod
+
+kubectl get pods
+
+---
+What is a Deployment resource
+
+kubectl get deployments
+
+kubectl logs -f hashgenerator-dep-69b6cd776-4j4l8
+
+...
+
+---
+
+
+
