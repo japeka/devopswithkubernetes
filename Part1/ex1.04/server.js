@@ -1,11 +1,10 @@
 /*
-Exercise 1.03
+Exercise 1.04
 
-In your "Log output" application create a folder for manifests 
-and move your deployment into a declarative file.
-Make sure everything still works by restarting and following logs.
+Create a deployment.yaml for the project.
+You won't have access to the port yet but that'll come soon.
 
-cd .. to ex1.03
+cd .. to ex1.04
 kubectl apply -f manifests/deployment.yaml
   =>deployment.apps/express-server-dep created
 
