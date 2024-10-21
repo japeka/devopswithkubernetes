@@ -61,6 +61,8 @@ kubectl explain pod
 
 kubectl get pods
 
+=>hashgenerator-dep-69b6cd776-6cm9c
+
 ---
 What is a Deployment resource
 
@@ -71,6 +73,31 @@ kubectl logs -f hashgenerator-dep-69b6cd776-4j4l8
 ...
 
 ---
+scaling
+
+kubectl scale deployment/hashgenerator-dep --replicas=4
+kubectl set image deployment/hashgenerator-dep dwk-app1=jakousa/dwk-app1:b7fc18de2376da80ff0cfc72cf581a9f94d10e64
+
+
+kubectl delete deployment hashgenerator-dep
+deployment.apps "hashgenerator-dep" deleted
+
+---
+yaml file
+
+cd ... ex1.00
+
+kubectl apply -f manifests/deployment.yaml
+    deployment.apps/hashgenerator-dep created
+
+kubectl delete -f manifests/deployment.yaml
+    deployment.apps "hashgenerator-dep" deleted
+
+kubectl apply -f https://raw.githubusercontent.com/kubernetes-hy/material-example/master/app1/manifests/deployment.yaml
+    deployment.apps/hashgenerator-dep created
+
+---
+
 
 
 

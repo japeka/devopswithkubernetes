@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: express-server-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: express-server
+  template:
+    metadata:
+      labels:
+        app: express-server
+    spec:
+      containers:
+        - name: express-server
+          image: jannek100/devopskubex102:latest
+
