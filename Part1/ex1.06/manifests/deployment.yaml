@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: express-server-html-v2-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: express-server-html-v2
+  template:
+    metadata:
+      labels:
+        app: express-server-html-v2
+    spec:
+      containers:
+        - name: express-server-html-v2
+          image: jannek100/devopskubex106:latest
+          env:
+          - name: PORT
+            value: "3000"

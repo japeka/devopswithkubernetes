@@ -98,6 +98,100 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes-hy/material-exampl
 
 ---
 
+$ docker build -t <image>:<new_tag>
+$ docker push <image>:<new_tag>
+
+$ kubectl apply -f manifests/deployment.yaml
 
 
+---
+debugging
+
+kubectl describe
+kubectl logs
+kubectl delete
+
+---
+
+#2Debugging
+kubectl apply -f https://raw.githubusercontent.com/kubernetes-hy/material-example/master/app1/manifests/deployment.yaml
+  =>deployment.apps/hashgenerator-dep created
+
+kubectl describe deployment hashgenerator-dep
+
+kubectl describe pod hashgenerator-dep-7c5cfb9744-php2x
+=> watch for events
+
+kubectl logs hashgenerator-dep-7c5cfb9744-php2x
+jst944
+
+Lens ID
+---
+
+#3Networking
+
+kubectl apply -f https://raw.githubusercontent.com/kubernetes-hy/material-example/master/app2/manifests/deployment.yaml
+    =>deployment.apps/hashresponse-dep created
+
+P:3000
+
+kubectl get po
+    =>hashresponse-dep-755b5b5dd7-ggxxq
+
+kubectl port-forward hashresponse-dep-755b5b5dd7-ggxxq 3003:3000
+  =>Forwarding from 127.0.0.1:3003 -> 3000
+  =>Forwarding from [::1]:3003 -> 3000
+
+---
+after ex1.05
+We're going to use either a Service resource or an Ingress resourse
+
+K3d documentation tells us how the ports are opened, we'll open local 
+8081 to 80 in k3d-k3s-default-serverlb
+local 8082 to 30080 in k3d-k3s-default-agent-0. 
+The 30080 is chosen almost completely randomly, but needs to be a value between 30000-32767 for the next step:
+
+k3d cluster delete
+
+k3d cluster create --port 8082:30080@agent:0 -p 8081:80@loadbalancer --agents 2
+
+kubectl apply -f https://raw.githubusercontent.com/kubernetes-hy/material-example/master/app2/manifests/deployment.yaml
+  deployment.apps/hashresponse-dep created
+
+---
+
+Create a file service.yaml into the manifests folder and we need 
+the service to do the following things:
+
+Declare that we want a Service
+Declare which port to listen to
+Declare the application where the request should be directed to
+Declare the port where the request should be directed to
+This translates into a yaml file with contents
+
+k3d cluster create --port 8082:30080@agent:0 -p 8081:80@loadbalancer --agents 2
+
+#example of service.yaml
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: hashresponse-svc
+spec:
+  type: NodePort
+  selector:
+    app: hashresponse # This is the app as declared in the deployment.
+  ports:
+    - name: http
+      nodePort: 30080 # This is the port that is available outside. Value for nodePort can be between 30000-32767
+      protocol: TCP
+      port: 1234 # This is a port that is available to the cluster, in this case it can be ~ anything
+      targetPort: 3000 # This is the target port
+
+
+$ kubectl apply -f manifests/service.yaml
+  service/hashresponse-svc created
+
+access
+=> http://localhost:8082
 
