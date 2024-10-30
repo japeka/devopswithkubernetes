@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: koa-server-html-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: koa-server-html
+  template:
+    metadata:
+      labels:
+        app: koa-server-html
+    spec:
+      containers:
+        - name: koa-server-html
+          image: jannek100/devopskbex107:latest
+          env:
+          - name: PORT
+            value: "3000"

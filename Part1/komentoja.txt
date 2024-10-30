@@ -195,3 +195,49 @@ $ kubectl apply -f manifests/service.yaml
 access
 => http://localhost:8082
 
+---
+
+service.yaml =>
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: hashresponse-svc
+spec:
+  type: ClusterIP
+  selector:
+    app: hashresponse
+  ports:
+    - port: 2345
+      protocol: TCP
+      targetPort: 3000
+
+ingress.yaml =>
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: dwk-material-ingress
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: hashresponse-svc
+            port:
+              number: 2345
+
+
+kubectl apply -f manifests/
+
+kubectl get svc,ing
+ingress.networking.k8s.io/dwk-material-ingress   <none>   *       172.21.0.3,172.21.0.4,172.21.0.5   80      16s
+
+We can see that the ingress is listening on port 80. 
+As we already opened port there we can access the 
+application on http://localhost:8081.
+
+
