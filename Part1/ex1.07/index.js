@@ -28,7 +28,10 @@ kubectl apply -f manifests/ingress.yaml
 
 kubectl get svc,ing
 
-(kubectl delete -f manifests/deployment.yaml) 
+(
+kubectl delete -f manifests/deployment.yaml
+tai kubectl delete -f ex1.07/manifests/
+) 
 
 kubectl get svc,ing
 NAME                                 TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)          AGE
@@ -49,6 +52,7 @@ http://localhost:8081/status
 "timestamp": "2024-10-30T13:02:49.193Z",
 "randomString": "w7sad"
 }
+
 */
 
 const Koa = require('koa');
