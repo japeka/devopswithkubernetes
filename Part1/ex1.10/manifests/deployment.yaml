@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: file-log-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: file-log
+  template:
+    metadata:
+      labels:
+        app: file-log
+    spec:
+      volumes: # Define volume
+        - name: shared-file-log
+          emptyDir: {}
+      containers:
+        - name: file-log-reader
+          image: jannek100/devopskubex110reader:latest
+          volumeMounts: # Mount volume
+          - name: shared-file-log
+            mountPath: /usr/src/app/files
+        - name: file-log-writer
+          image: jannek100/devopskubex110writer:latest
+          volumeMounts: # Mount volume
+          - name: shared-file-log
+            mountPath: /usr/src/app/files

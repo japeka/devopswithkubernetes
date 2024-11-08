@@ -240,4 +240,15 @@ We can see that the ingress is listening on port 80.
 As we already opened port there we can access the 
 application on http://localhost:8081.
 
+---
+
+4. Introduction to Storage
+
+video -> to check out
+https://www.youtube.com/watch?v=GgCA2USI5iQ
+
+article -> check out
+https://softwareengineeringdaily.com/2019/01/11/why-is-storage-on-kubernetes-is-so-hard/
+
+
 

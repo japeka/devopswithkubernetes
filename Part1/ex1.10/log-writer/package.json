@@ -1,0 +1,16 @@
+{
+  "name": "ex1.10.writer",
+  "version": "1.0.0",
+  "description": "Project can be done with any language and framework you want",
+  "main": "server1.js",
+  "scripts": {
+    "start": "node writer.js"
+  },
+  "keywords": [],
+  "author": "JK",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1"
+  }
+}

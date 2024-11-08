@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: express-server-html-pong-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: express-server-html-pong
+  template:
+    metadata:
+      labels:
+        app: express-server-html-pong
+    spec:
+      containers:
+        - name: express-server-html-pong
+          image: jannek100/devopskubex109:latest
+          env:
+          - name: PORT
+            value: "3000"
